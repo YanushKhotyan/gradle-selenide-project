@@ -1,0 +1,58 @@
+plugins {
+    id 'io.qameta.allure' version '2.5' // Latest Plugin Version
+    id 'java'
+}
+
+apply plugin: 'java'
+targetCompatibility = 1.8
+
+group 'by.yanushost.gradle-selenide-project'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+allure {
+    autoconfigure = true
+    version = '2.7.0'  // Latest Allure Version
+
+    useJUnit5 {
+        version = '2.7.0' // Latest Allure Version
+    }
+
+}
+
+// Versioning of dependencies
+wrapper.gradleVersion = '5.5.1'
+def cucumberVersion = '5.0.0-RC2'
+def junitVersion = '5.5.0'
+def selenideVersion = '5.5.0'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    compile 'io.rest-assured:rest-assured:4.3.0'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+
+    testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:${junitVersion}"
+    compile "com.codeborne:selenide:${selenideVersion}"
+
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
